@@ -14,7 +14,10 @@ def path2label(path):
     else:
         return "unknown"
 
-data = tc.image_analysis.load_images('data/train', with_path=True)
-data['label'] = data['path'].apply(path2label)
+def gen_sframe(data_type):
+    data = tc.image_analysis.load_images('data/%s' % data_type, with_path=True)
+    data['label'] = data['path'].apply(path2label)
+    data.save('data/%s.sframe' % data_type)
 
-data.save('faces.sframe')
+gen_sframe('train')
+gen_sframe('test')

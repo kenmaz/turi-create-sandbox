@@ -20,3 +20,6 @@ print("==== similar ====")
 sim_src = tc.SFrame({'manga_id': [59579]})
 print(sim_src.join(manga, on='manga_id'))
 print(m.get_similar_items(sim_src['manga_id']).join(manga, on={'similar':'manga_id'}).sort('score', ascending = False))
+
+
+m.export_coreml('MangaRecommender.mlmodel')

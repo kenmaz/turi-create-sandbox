@@ -4,3 +4,4 @@ recommender/ml-latest-small
 recommender/recommend.model
 recommender/sample.py
 recommender/test.py
+image_classification/data
