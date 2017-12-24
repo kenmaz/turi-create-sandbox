@@ -4,22 +4,23 @@ manga = tc.SFrame.read_csv('mangabox/manga_id-title.csv')
 
 print("==== input ====")
 data = tc.SFrame({
-    'uid': ["kenmaz", "kenmaz", "kenmaz", "kenmaz"],
-    'manga_id': [203, 237, 56124, 58443],
-    'comp_rate': [1.0, 1.0, 0.1, 0.1]
+    'uid': ["xxxxxx","xxxxxx","xxxxxx"],
+    'manga_id': [56124,58191,40184]
     })
-print(data.join(manga, on='manga_id').sort('comp_rate', ascending = False))
+print(data.join(manga, on='manga_id'))
 
 print("==== recommend ====")
-res = m.recommend(['kenmaz'], new_observation_data=data)
+res = m.recommend(['xxxxxx'], new_observation_data=data)
 print(res.join(manga, on='manga_id').sort('rank'))
 
-print(m.recommend(['new_user']).join(manga, on='manga_id').sort('rank'))
+print(m.recommend(['zzzzzz']).join(manga, on='manga_id').sort('rank'))
 
 print("==== similar ====")
-sim_src = tc.SFrame({'manga_id': [59579]})
+sim_src = tc.SFrame({'manga_id': [47415]})
 print(sim_src.join(manga, on='manga_id'))
 print(m.get_similar_items(sim_src['manga_id']).join(manga, on={'similar':'manga_id'}).sort('score', ascending = False))
 
-
-m.export_coreml('MangaRecommender.mlmodel')
+print("==== similar ====")
+sim_src = tc.SFrame({'manga_id': [54275]})
+print(sim_src.join(manga, on='manga_id'))
+print(m.get_similar_items(sim_src['manga_id']).join(manga, on={'similar':'manga_id'}).sort('score', ascending = False))

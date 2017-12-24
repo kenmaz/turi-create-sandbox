@@ -1,14 +1,18 @@
 import turicreate as tc
-actions = tc.SFrame.read_csv('mangabox/comp_rate.csv')
-train, test = tc.recommender.util.random_split_by_user(actions, 'uid', 'manga_id')
+data = tc.SFrame.read_csv('mangabox/manga_fav.csv')
+data.explore()
+train, test = tc.recommender.util.random_split_by_user(data, 'uid', 'manga_id')
 
-actions = tc.SFrame.read_csv('mangabox/comp_rate.csv')
+
 print("#### train #####")
-m = tc.recommender.create(train, user_id='uid', item_id='manga_id', target='comp_rate')
+m = tc.recommender.create(train, user_id='uid', item_id='manga_id')
 
 print("#### eval #####")
-eval = m.evaluate(test)
-print(eval)
+res = m.evaluate(test)
+
+pro = res['precision_recall_overall']
+pro.print_rows(18,3)
+tc.show(pro['recall'], pro['precision'], 'recall', 'precision')
 
 m.save('recommend.model')
 
